@@ -1,0 +1,13 @@
+.navbar .nav {
+    align-items: center;
+}
+
+.navbar .nav-item {
+    position: relative;
+}
+
+.navbar .nav-item a {
+    display: block;
+    padding: 0px 16px;
+    font-weight: 500;
+}

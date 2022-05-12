@@ -1,0 +1,38 @@
+.banner-top100 {
+    background: transparent;
+    text-align: center;
+    height: 280px;
+    position: relative;
+}
+
+.banner-top100 .bg-blur {
+    background: url(https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.6.24/static/media/banner-100.33cafe6b.png) top/cover no-repeat;
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+}
+
+.banner-top100 .bg-alpha {
+    background-image: linear-gradient(180deg,hsla(0,0%,100%,0) 37%, #170f23);
+}
+
+.banner-top100 .bg-alpha-1 {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .8;
+    position: absolute;
+    height: 260px;
+    z-index: 0;
+    background-image: linear-gradient(180deg, #170f23, #170f23);
+}
+
+.banner-top100 .bg-alpha, .banner-top100 .bg-blur {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    height: 260px;
+    z-index: 0;
+}

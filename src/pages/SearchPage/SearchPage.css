@@ -1,0 +1,23 @@
+.search-navbar {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid hsla(0,0%,100%,0.1);
+    padding-bottom: 8px;
+}
+
+.search-navbar .navbar .nav-item a {
+    color: #dadada;
+}
+
+.search-navbar .nav-item.active a {
+    color: white;
+}
+
+.counter-song {
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 50%;
+    font-size: 14px;
+    background-color: hsla(0,0%,100%,0.1);
+    font-weight: normal;
+}

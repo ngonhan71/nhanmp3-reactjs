@@ -1,0 +1,36 @@
+.nhanmp3-card {
+    position: relative;
+    /* width: 180px; */
+    margin-top: 10px;
+}
+
+.nhanmp3-card-image img {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.nhanmp3-card-content .title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #fff;
+}
+
+.nhanmp3-card-content .subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.nhanmp3-card-content .title a {
+    text-transform: none;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    display: block;
+}

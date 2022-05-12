@@ -1,0 +1,71 @@
+.playlist-detail-container {
+    margin-top: 90px;
+}
+
+.playlist-detail-container .nhanmp3-card-image {
+    width: 300px;
+}
+
+.playlist-detail-container .nhanmp3-card-image img {
+    border-radius: 50%;
+    animation: rotate 14s linear infinite;
+    animation-play-state: paused;
+}
+
+
+.playlist-detail-container .nhanmp3-card-image.running img {
+    animation-play-state: running;
+}
+
+.playlist-detail-container .description {
+    margin-bottom: 10px;
+    font-size: 15px;
+    text-align: justify;
+}
+
+.song-list-header {
+    align-items: center;
+    display: flex;
+    padding: 4px;
+    border-radius: 5px;
+    color: hsla(0,0%,100%,0.5);
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.media .media-left {
+    width: 50%;
+}
+
+.media-content {
+    flex-grow: 1;
+    text-align: left;
+    align-self: center;
+}
+
+.playlist-header .media-content .content-top {
+    text-align: center;
+}
+
+.playlist-header .media-content .content-top .title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.playlist-header .media-content .content-top p {
+    color: hsla(0,0%,100%,0.5);
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
