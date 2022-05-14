@@ -16,11 +16,12 @@ import {
   updateCurrentSong,
   updateIsPaused,
   addSongs,
+  updateIsPlaying
 } from "../../redux/actions/playerControl";
 
 function NhanMp3PlayerControl() {
   const dispatch = useDispatch();
-  console.log("player re");
+  // console.log("player re");
 
   const currentSong = useSelector((state) => state.playerControl.currentSong);
   const isPlaying = useSelector((state) => state.playerControl.isPlaying);
@@ -50,16 +51,30 @@ function NhanMp3PlayerControl() {
     }
   };
 
-  const handleNextSong = async () => {
-    handlePlaySongByIndex(currentIndex + 1);
-  };
 
   const handleClickBtnPre = () => {
     handlePlaySongByIndex(currentIndex - 1);
   }
 
+  const handleNextSongOrOnEnded = () => {
+    if (isRepeat) {
+      audioRef.current.play();
+    } else if (!isRepeat) {
+      if (isRandom) {
+        const indexRandom = helper.randomIndex(songs.length, currentIndex);
+        handlePlaySongByIndex(indexRandom);
+        return;
+      }
+      if (!(currentIndex === songs.length - 1)) {
+        handlePlaySongByIndex(currentIndex + 1);
+        return;
+      }
+    }
+    return;
+  }
+
   const handleClickBtnNext = () => {
-    handleNextSong();
+    handleNextSongOrOnEnded()
   };
 
   const handleClickBtnRepeat = () => {
@@ -87,20 +102,7 @@ function NhanMp3PlayerControl() {
   };
 
   const handleOnEndedAudio = () => {
-    if (isRepeat) {
-      audioRef.current.play();
-    } else if (!isRepeat) {
-      if (isRandom) {
-        const indexRandom = helper.randomIndex(songs.length, currentIndex);
-        handlePlaySongByIndex(indexRandom);
-        return;
-      }
-      if (!(currentIndex === songs.length - 1)) {
-        handleNextSong();
-        return;
-      }
-    }
-    return;
+    handleNextSongOrOnEnded()
   };
 
   const handleClickProgress = (e) => {
@@ -150,18 +152,23 @@ function NhanMp3PlayerControl() {
       try {
         const streaming = await homeApi.getStreaming(currentSong);
         const song = await homeApi.getSong(currentSong);
-        setStreaming(streaming.dataFromZingMp3.data);
-        setSongInfo(song.dataFromZingMp3.data);
+        if (streaming.status !== 'error') {
+          setStreaming(streaming.dataFromZingMp3.data);
+          setSongInfo(song.dataFromZingMp3.data);
+        } else {
+          dispatch(updateIsPlaying(false))
+          alert (streaming.message)
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, [currentSong]);
+  }, [currentSong, dispatch]);
 
   useEffect(() => {
-    const fetchRecommendSong = async () => {
+    const getRecommendSong = async () => {
       try {
         const data = await homeApi.getRecommend(songSearch);
         dispatch(addSongs(data.dataFromZingMp3.data.items.filter(item => item.streamingStatus === 1)))
@@ -170,7 +177,7 @@ function NhanMp3PlayerControl() {
       }
     };
     if (songSearch) {
-      fetchRecommendSong();
+      getRecommendSong();
     }
   }, [songSearch, dispatch]);
 
@@ -253,7 +260,7 @@ function NhanMp3PlayerControl() {
               <div className="progress-circle" ref={progressCircleRef}></div>
             </div>
             <span className="time right">
-              {songInfo && helper.formatTime(songInfo.duration)}
+              {songInfo.duration ? helper.formatTime(songInfo.duration) : '00:00'}
             </span>
           </div>
         </div>

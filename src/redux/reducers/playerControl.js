@@ -1,6 +1,6 @@
 const initialState = {
   currentSong: "",
-  currentAlnum: "",
+  currentAlbum: "",
   isPaused: true,
   isPlaying: false,
   length: 0,
@@ -13,10 +13,10 @@ const playerControlReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case "ADD_SONGS": {
-      console.log({
-        ...state,
-        songs: action.payload,
-      })
+      // console.log({
+      //   ...state,
+      //   songs: action.payload,
+      // })
       return {
         ...state,
         songs: action.payload,
@@ -24,10 +24,10 @@ const playerControlReducer = (state = initialState, action) => {
     }
 
     case "UPDATE_CURRENT_SONG": {
-      console.log({
-        ...state,
-        ...action.payload,
-      })
+      // console.log({
+      //   ...state,
+      //   ...action.payload,
+      // })
       return {
         ...state,
         ...action.payload,
@@ -37,7 +37,7 @@ const playerControlReducer = (state = initialState, action) => {
     case "UPDATE_CURRENT_ALBUM": {
       return {
         ...state,
-        currentAlnum: action.payload,
+        currentAlbum: action.payload,
       };
     }
 
@@ -49,10 +49,10 @@ const playerControlReducer = (state = initialState, action) => {
     }
 
     case "UPDATE_INDEX_SONG": {
-      console.log({
-        ...state,
-        currentIndex: action.payload,
-      })
+      // console.log({
+      //   ...state,
+      //   currentIndex: action.payload,
+      // })
       return {
         ...state,
         currentIndex: action.payload,
@@ -69,6 +69,14 @@ const playerControlReducer = (state = initialState, action) => {
         ...state,
         isPaused: action.payload,
         pausingToPlayNewSong: false
+      };
+    }
+
+    case "UPDATE_IS_PLAYING": {
+     
+      return {
+        ...state,
+        isPlaying: action.payload,
       };
     }
 

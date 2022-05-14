@@ -34,5 +34,13 @@ export const updateIsPaused = (value) => {
     }
 }
 
+export const updateIsPlaying = (value) => {
+    return  {
+        type: 'UPDATE_IS_PLAYING',
+        payload: value
+    }
+}
+
+
 
 

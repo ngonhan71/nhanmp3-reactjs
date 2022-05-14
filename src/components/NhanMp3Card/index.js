@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import './NhanMp3Card.css'
-import { addSongs, updateCurrentAlbum } from '../../redux/actions/playerControl'
+import { addSongs } from '../../redux/actions/playerControl'
 import homeApi from '../../api/homeApi'
 import { useDispatch, useSelector } from 'react-redux'
 function NhanMp3Card({data}) {
@@ -16,19 +16,18 @@ function NhanMp3Card({data}) {
     
 
     const dispatch = useDispatch()
-    const handleClick = async (e) => {
+    const handleNhanMp3CardClick = async (e) => {
         // Neu khong co bai hat, thi get Playlist
         // Nguoc lai, khong lam gi
         if (!currentSong) {
             const id = e.currentTarget.getAttribute("data-id");
             const data = await homeApi.getPlaylist(id)
-            dispatch(updateCurrentAlbum())
-            dispatch(addSongs(data.dataFromZingMp3.data.song.items))
+            dispatch(addSongs(data.dataFromZingMp3.data.song.items.filter(item => item.streamingStatus === 1)))
         }
     }
     
     return (
-        <div className="nhanmp3-card" onClick={handleClick} data-id={data.encodeId}>
+        <div className="nhanmp3-card" onClick={handleNhanMp3CardClick} data-id={data.encodeId}>
 
             <Link to={`/album/${data.encodeId}`}>
                 <div className="nhanmp3-card-image">

@@ -17,13 +17,6 @@ function AlbumPage() {
     const fetchData = async () => {
       try {
         const data = await homeApi.getPlaylist(id);
-        // // Neu chua co bai hat, thi dispatch songs vao store
-        // if (!currentSong) {
-        //   dispatch(
-        //     addSongs(data.dataFromZingMp3.data.song.items.filter((item) => item.streamingStatus === 1))
-        //   );
-        //   // dispatch(updateIndexSong(0))
-        // }
         setDataAlbum(data.dataFromZingMp3.data);
       } catch (error) {
         console.log(error);

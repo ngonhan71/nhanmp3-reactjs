@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./Song.css";
 import helper from "../../helper/NhanMp3";
-import { updateCurrentSong, addSongs } from "../../redux/actions/playerControl";
+import { updateCurrentSong, addSongs, updateCurrentAlbum } from "../../redux/actions/playerControl";
 import { memo } from "react";
 import { useParams } from "react-router-dom";
 import homeApi from "../../api/homeApi";
@@ -30,6 +30,7 @@ function Song({ data, index, isPlay, isSearching }) {
     const action = updateCurrentSong(songObject);
     dispatch(action);
 
+    dispatch(updateCurrentAlbum(id))
 
     // Khi currentSong thay doi => cap nhat lai song-list trong store
     if (id) {
