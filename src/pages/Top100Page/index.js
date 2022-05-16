@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-grid-system";
+import { Container, Row, Col } from "react-bootstrap";
+import Skeleton from "react-loading-skeleton"
 import NhanMp3Card from "../../components/NhanMp3Card";
 import homeApi from "../../api/homeApi";
 
@@ -39,7 +40,7 @@ function Top100Page() {
                     </Col>
                   ))
                 ) : (
-                  <h1>Loading...</h1>
+                  <Skeleton height={170} count={2} style={{margin: '10px 0'}} />
                 )}
               </Row>
             </Col>
@@ -53,7 +54,7 @@ function Top100Page() {
                     </Col>
                   ))
                 ) : (
-                  <h1>Loading...</h1>
+                  <Skeleton height={170} count={2} style={{margin: '10px 0'}} />
                 )}
               </Row>
             </Col>

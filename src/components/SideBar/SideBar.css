@@ -1,0 +1,49 @@
+.sidebar {
+    padding: 15px 0;
+    background-color: hsla(0,0%,100%,0.05);
+    width: 240px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 99;
+}
+
+.sidebar a {
+    padding: 0 20px;
+}
+
+.sidebar .title {
+    color: hsla(0,0%,100%,0.8);
+}
+
+.sidebar .title:hover{
+    color: white;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-header .close-btn {
+    display: none;
+}
+
+.sidebar .nhanmp3-navbar {
+    margin-top: 10px;
+}
+
+
+
+@media (max-width: 576px) {
+    .sidebar.active {
+        display: block;
+        background-color: #170f23;
+    }
+
+    .sidebar-header .close-btn {
+        display: flex;
+    }
+    
+}

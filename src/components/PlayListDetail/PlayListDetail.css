@@ -4,6 +4,7 @@
 
 .playlist-detail-container .nhanmp3-card-image {
     width: 300px;
+    margin: 0 auto;
 }
 
 .playlist-detail-container .nhanmp3-card-image img {
@@ -58,6 +59,10 @@
     color: hsla(0,0%,100%,0.5);
     font-size: 16px;
     line-height: 1.75;
+}
+
+.description {
+    color: white;
 }
 
 

@@ -156,6 +156,14 @@ function NhanMp3PlayerControl() {
           setStreaming(streaming.dataFromZingMp3.data);
           setSongInfo(song.dataFromZingMp3.data);
         } else {
+          const songObject = {
+            currentSong: "",
+            currentIndex: -1,
+            isPlaying: false,
+            isPaused: true
+          };
+          const action = updateCurrentSong(songObject);
+          dispatch(action);
           dispatch(updateIsPlaying(false))
           alert (streaming.message)
         }
@@ -205,7 +213,7 @@ function NhanMp3PlayerControl() {
               </div>
             </div>
             <div className="media-content">
-              <p className="song-name">{songInfo && songInfo.title}</p>
+              <p className="song-name title">{songInfo && songInfo.title}</p>
               <p className="song-author">{songInfo && songInfo.artistsNames}</p>
             </div>
           </div>
@@ -250,11 +258,11 @@ function NhanMp3PlayerControl() {
               00:00
             </span>
             <div
-              className="progress"
+              className="nhanmp3-progress"
               ref={progressRef}
               onClick={handleClickProgress}
             >
-              <div className="progress-bar">
+              <div className="nhanmp3-progress-bar">
                 <div className="progress-run" ref={progressRunRef}></div>
               </div>
               <div className="progress-circle" ref={progressCircleRef}></div>

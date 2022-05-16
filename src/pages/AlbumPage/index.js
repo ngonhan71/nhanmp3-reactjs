@@ -27,7 +27,7 @@ function AlbumPage() {
 
   return (
     <div className="mt-100 page">
-      {dataAlbum && <PlayListDetail data={dataAlbum} />}
+      {<PlayListDetail data={dataAlbum} />}
     </div>
   );
 }

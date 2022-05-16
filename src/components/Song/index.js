@@ -18,6 +18,8 @@ function Song({ data, index, isPlay, isSearching }) {
   const handleSongClick = async (e) => {
     const songItem = e.currentTarget;
     const songId = songItem.getAttribute("song-id");
+    const songName = songItem.getAttribute("song-name")
+    document.title = songName
     const songObject = {
       currentSong: songId,
       currentIndex: isSearching ? -1 : index,
@@ -31,23 +33,25 @@ function Song({ data, index, isPlay, isSearching }) {
     dispatch(action);
 
     dispatch(updateCurrentAlbum(id))
-
     // Khi currentSong thay doi => cap nhat lai song-list trong store
     if (id) {
       const data = await homeApi.getPlaylist(id);
-      dispatch(addSongs(data.dataFromZingMp3.data.song.items.filter(item => item.streamingStatus === 1)));
+      dispatch(addSongs(data.dataFromZingMp3.data.song.items.filter(item => 
+        item.streamingStatus === 1 && item.isWorldWide )));
     }
   };
 
+  
   return (
     <div
-      className="song-item"
+      className={`song-item ${data.encodeId === currentSong ? 'active' : ''}`}
       onClick={handleSongClick}
       song-id={data.encodeId}
+      song-name={data.title}
     >
       <div className="media">
         <div className="media-left">
-          <div className={`song-thumbnail ${isPlay ? "play" : ""}`}>
+          <div className={`song-thumbnail ${isPlay && !isPaused ? "play" : ""}`}>
             <img src={data.thumbnail} alt="" />
             <div className="action-play">
               <div className="icon-playing"></div>

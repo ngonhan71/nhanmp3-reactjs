@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-grid-system";
+import { Container, Row, Col } from "react-bootstrap";
+import Skeleton from 'react-loading-skeleton'
 import Banner from "../../components/Banner";
 import NhanMp3Card from "../../components/NhanMp3Card";
 import homeApi from "../../api/homeApi";
@@ -24,9 +25,11 @@ function HomePage() {
     fetchData();
   }, []);
 
+
   return (
     <div className="home-page page">
       <Banner />
+      
       <div>
         <Container>
           <Row>
@@ -35,13 +38,12 @@ function HomePage() {
               <Row>
                 {sectionCoTheBanMuonNghe.items ? (
                   sectionCoTheBanMuonNghe.items.map((item) => (
-                    <Col xl={2} key={item.encodeId}>
+                    <Col xl={2} xs={6} key={item.encodeId}>
                       <NhanMp3Card data={item} />
                     </Col>
                   ))
-                ) : (
-                  <h1>Loading...</h1>
-                )}
+                ) : <Skeleton height={200} count={2} style={{margin: '10px 0'}} />
+                }
               </Row>
             </Col>
 
@@ -50,13 +52,11 @@ function HomePage() {
               <Row>
                 {sectionNhacMoiMoiNgay.items ? (
                   sectionNhacMoiMoiNgay.items.map((item) => (
-                    <Col xl={2} key={item.encodeId}>
+                    <Col xl={2} xs={6} key={item.encodeId}>
                       <NhanMp3Card data={item} />
                     </Col>
                   ))
-                ) : (
-                  <h1>Loading...</h1>
-                )}
+                ) : <Skeleton height={200} count={2} style={{margin: '10px 0'}} /> }
               </Row>
             </Col>
 

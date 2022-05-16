@@ -5,6 +5,11 @@
 }
 
 .song-item.active {
+    background-color: hsla(0,0%,100%,0.15);
+    border-radius: 4px;
+}
+
+.song-item:hover {
     background-color: hsla(0,0%,100%,0.1);
     border-radius: 4px;
 }
@@ -22,6 +27,7 @@
 
 .song-item .media .media-left {
     display: flex;
+    align-items: center;
     width: 50%;
 }
 
@@ -73,6 +79,7 @@
     flex-grow: 1;
     text-align: left;
     align-self: center;
+    width: 40%;
 }
 
 .song-item .album-info {
@@ -82,4 +89,20 @@
 .song-item .song-duration {
     width: 46px;
     color: hsla(0,0%,100%,0.5);
+}
+
+@media (max-width: 576px) {
+
+    .song-item .media {
+        padding: 5px;
+    }
+
+    .song-item {
+        font-size: 13px;
+    }
+
+    .song-item .album-info {
+        font-size: 12px;
+    }
+    
 }

@@ -25,14 +25,6 @@ code {
     monospace;
 }
 
-.container {
-  max-width: 1200px;
-  width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-}
-
 .nhanmp3-btn {
   color: white;
   background-color: transparent;
@@ -58,7 +50,7 @@ code {
 
 a {
   cursor: pointer;
-  color: inherit;
+  color: hsla(0,0%,100%,0.5);
   font-style: normal;
   font-stretch: normal;
   letter-spacing: normal;
@@ -66,6 +58,7 @@ a {
 
 a, a.active, a:hover {
   text-decoration: none;
+  color: white;
 }
 
 .mt-60 {
@@ -92,4 +85,36 @@ ul {
 
 .align-items-center {
   align-items: center;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+svg {
+  vertical-align: initial;
+}
+
+.header .row > * {
+  width: auto;
+}
+
+.main {
+  margin-left: 240px;
+}
+
+@media (max-width: 1200px) {
+  .sidebar {
+      display: none;
+  }
+
+  .header,
+  .main {
+    margin-left: 0;
+  }
 }

@@ -1,4 +1,5 @@
-import { Container, Row, Col } from 'react-grid-system';
+import { Container, Row, Col } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton'
 import Song from '../../components/Song'
 import homeApi from '../../api/homeApi'
 import { Link, useSearchParams } from 'react-router-dom';
@@ -64,7 +65,7 @@ function SearchPage({type}) {
               {type === 'all' && 
                   <div className="song-list-content">
                   {
-                    loading ? <h1>Loading...</h1> :
+                    loading ? <Skeleton height={85} count={5} style={{margin: '5px 0'}} /> :
                     (dataSearch && dataSearch.length > 0 ?
                       dataSearch.map(song => 
                         <Song key={song.encodeId} data={song} isSearching={true} isPlay={false} />)

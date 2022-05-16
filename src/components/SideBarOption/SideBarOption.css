@@ -1,0 +1,22 @@
+.sidebar-option {
+    margin-top: 5px;
+}
+
+.sidebar-link {
+    font-size: 17px;
+    color:  #b3b3b3;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-link:hover {
+    color: white;
+}
+
+.sidebar-link .icon {
+    font-size: 28px;
+    width: 40px;
+   
+}
+
