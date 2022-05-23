@@ -8,19 +8,27 @@ function LyricContainer({ cTime }) {
   const containerRef = useRef()
   const currentSong = useSelector((state) => state.playerControl.currentSong);
   const [dataLyric, setDataLyric] = useState([]);
+  const [data, setData] = useState([]);
   const [match, setMatch] = useState(false);
 
   useEffect(() => {
     const fetchLyrics = async () => {
       const res = await songApi.getLyric(currentSong)
       const data = res.dataFromZingMp3.data.sentences
+      setData(data)
+    }
+    fetchLyrics()
+  }, [currentSong])
+
+  useEffect(() => {
+    if (data) {
       const customData = data.map((item) => {
         return helper.wordsToSentence(item.words, cTime);
       });
       setDataLyric(customData) 
     }
-    fetchLyrics()
-  }, [currentSong, cTime])
+     
+  }, [cTime, data])
   
   const handleScroll = useCallback((height) => {
     containerRef.current.scrollTop += height
