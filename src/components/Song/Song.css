@@ -37,7 +37,6 @@
     line-height: 1.6;
 }
 
-
 .song-item .song-author {
     color: rgba(255, 255, 255, 0.5);
     font-size: 14px;
@@ -91,6 +90,7 @@
     color: hsla(0,0%,100%,0.5);
 }
 
+
 @media (max-width: 576px) {
 
     .song-item .media {
@@ -98,11 +98,36 @@
     }
 
     .song-item {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .song-item .album-info {
         font-size: 12px;
+    }
+
+    .song-item .song-author {
+        font-size: 12px;
+    }
+
+    .song-item .song-thumbnail {
+        width: 50px;
+        min-height: 50px;
+        height: 50px;
+    }
+
+    .song-item .song-name,
+    .song-item .song-author {
+        max-width: 120px;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: none;
+        white-space: nowrap;
+    }
+
+    .song-item .song-duration {
+        text-align: right;
     }
     
 }

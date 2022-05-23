@@ -28,6 +28,17 @@ const helper = {
     },
     getNow: () => {
         return new Date().toLocaleDateString()
+    },
+    wordsToSentence: (words, cTime) => {
+        const data =  words.map((word) => word.data).join(' ')
+        const start = Math.trunc(words[0].startTime / 1000)
+        const end = Math.trunc(words[words.length - 1].endTime / 1000)
+        let active = false
+        if (cTime >= start && cTime <= end) active = true
+        return {data, start, end, active}
+    },
+    timLoiGanNhatActive:(list, cTime) => {
+        return list.findLastIndex(item => item.end < cTime)
     }
     
 }

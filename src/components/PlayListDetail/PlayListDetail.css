@@ -74,3 +74,10 @@
         transform: rotate(360deg);
     }
 }
+
+@media (max-width: 576px) {
+    .playlist-detail-container .nhanmp3-card-image {
+        width: 250px;
+    }
+    
+}

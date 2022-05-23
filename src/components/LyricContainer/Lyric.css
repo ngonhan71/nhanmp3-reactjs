@@ -1,0 +1,35 @@
+.lyric-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 90px;
+    z-index: 100;
+    background-color: #403059;
+    color: white;
+    width: 600px;
+    overflow: hidden;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    transition: all linear 0.4s;
+}
+
+
+.lyric-container::-webkit-scrollbar {
+    display: none;
+}
+
+.lyric-container .lyrics {
+    flex-direction: column;
+}
+
+.lyric-container .lyrics .lyric {
+    font-size: 32px;
+    margin: 8px 0;
+    font-weight: 600;
+    transition: all linear 0.4s;
+
+}
+
+.lyric-container .lyric.active {
+    color: yellow
+}

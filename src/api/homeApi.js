@@ -14,14 +14,6 @@ const homeApi = {
         const url = `playlist/${id}`
         return axiosClient.get(url)
     },
-    getStreaming: (id) => {
-        const url = `streaming/${id}`
-        return axiosClient.get(url)
-    },
-    getSong: (id) => {
-        const url = `bai-hat/${id}`
-        return axiosClient.get(url)
-    },
     searchAll: (key) => {
         const url = `tim-kiem/tat-ca`
         return axiosClient.get(url, { params: { key } })
@@ -30,11 +22,6 @@ const homeApi = {
         const url = `tim-kiem/bai-hat`
         return axiosClient.get(url, { params: { key, page } })
     },
-    getRecommend: (id) => {
-        const url = `recommend-song/${id}`
-        return axiosClient.get(url)
-    }
-
 }
 
 export default homeApi

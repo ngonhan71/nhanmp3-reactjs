@@ -36,6 +36,7 @@ function Song({ data, index, isPlay, isSearching }) {
     // Khi currentSong thay doi => cap nhat lai song-list trong store
     if (id) {
       const data = await homeApi.getPlaylist(id);
+      console.log('get Playlist')
       dispatch(addSongs(data.dataFromZingMp3.data.song.items.filter(item => 
         item.streamingStatus === 1 && item.isWorldWide )));
     }

@@ -6,10 +6,12 @@ import {
   IoPlaySkipForward,
   IoPlayCircleOutline,
   IoPauseCircleOutline,
+  IoMicSharp
 } from "react-icons/io5";
+import LyricContainer from "../LyricContainer"
 import { useSelector, useDispatch } from "react-redux";
 import { memo } from "react";
-import homeApi from "../../api/homeApi";
+import songApi from "../../api/songApi";
 import "./NhanMp3PlayerControl.css";
 import helper from "../../helper/NhanMp3";
 import {
@@ -36,6 +38,10 @@ function NhanMp3PlayerControl() {
   const [streaming, setStreaming] = useState({});
   const [isRepeat, setIsRepeat] = useState(false);
   const [isRandom, setIsRandom] = useState(false);
+
+  const [showLyric, setShowLyric] = useState(false)
+
+  const [cTime, setCTime] = useState(0)
 
   const audioRef = useRef(null);
   const progressRef = useRef();
@@ -99,6 +105,7 @@ function NhanMp3PlayerControl() {
     handleUpdateProgressUI(percent);
     const currentTime = percent * duration;
     handleUpdateCurrentTimeUI(currentTime);
+    setCTime(currentTime)
   };
 
   const handleOnEndedAudio = () => {
@@ -117,6 +124,8 @@ function NhanMp3PlayerControl() {
     audioRef.current.currentTime = currentTime;
 
     handleUpdateCurrentTimeUI(currentTime);
+    setCTime(currentTime)
+
   };
 
   const handleUpdateCurrentTimeUI = (currentTime) => {
@@ -133,6 +142,8 @@ function NhanMp3PlayerControl() {
   const handlePlaySongByIndex = async (index) => {
     try {
       const songId = songs[index].encodeId
+      const songName = songs[index].title
+      document.title = songName
       const songObject = {
         currentSong: songId,
         currentIndex: index,
@@ -150,8 +161,8 @@ function NhanMp3PlayerControl() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const streaming = await homeApi.getStreaming(currentSong);
-        const song = await homeApi.getSong(currentSong);
+        const streaming = await songApi.getStreaming(currentSong);
+        const song = await songApi.getSong(currentSong);
         if (streaming.status !== 'error') {
           setStreaming(streaming.dataFromZingMp3.data);
           setSongInfo(song.dataFromZingMp3.data);
@@ -171,14 +182,13 @@ function NhanMp3PlayerControl() {
         console.log(error);
       }
     };
-
     fetchData();
   }, [currentSong, dispatch]);
 
   useEffect(() => {
     const getRecommendSong = async () => {
       try {
-        const data = await homeApi.getRecommend(songSearch);
+        const data = await songApi.getRecommend(songSearch);
         dispatch(addSongs(data.dataFromZingMp3.data.items.filter(item => item.streamingStatus === 1)))
       } catch (error) {
         console.log(error);
@@ -201,10 +211,15 @@ function NhanMp3PlayerControl() {
     }
   }, [streaming, isPaused, pausingToPlayNewSong]);
 
+  const handleShowLyric = async () => {
+    setShowLyric(!showLyric)
+  }
+
 
   return (
     <div className={`player-controls ${isPlaying ? "active" : ""}`}>
-      <div className="player-controls-contrainer">
+      <div className="player-controls-container">
+        {showLyric && <LyricContainer cTime={cTime} />}
         <div className="player-controls-left">
           <div className="music-info">
             <div className="media-left">
@@ -271,6 +286,9 @@ function NhanMp3PlayerControl() {
               {songInfo.duration ? helper.formatTime(songInfo.duration) : '00:00'}
             </span>
           </div>
+        </div>
+        <div>
+          <button className={`nhanmp3-btn`} onClick={handleShowLyric}><IoMicSharp /></button>
         </div>
         <audio
           ref={audioRef}

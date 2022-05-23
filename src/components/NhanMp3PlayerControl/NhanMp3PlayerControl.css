@@ -11,7 +11,7 @@
     display: block;
 }
 
-.player-controls-contrainer {
+.player-controls-container {
     display: flex;
     align-items: center;
     height: 90px;
@@ -47,6 +47,8 @@
     height: 64px;
     border-radius: 4px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .player-controls .player-controls-center {
@@ -164,7 +166,7 @@
 
 @media (max-width: 576px) {
 
-    .player-controls-contrainer {
+    .player-controls-container {
         padding: 0 5px;
         font-size: 12px;
     }
