@@ -11,6 +11,7 @@ function Song({ data, index, isPlay, isSearching }) {
   const dispatch = useDispatch();
   const isPaused = useSelector((state) => state.playerControl.isPaused);
   const currentSong = useSelector((state) => state.playerControl.currentSong);
+  const currentAlbum = useSelector((state) => state.playerControl.currentAlbum);
   const params = useParams();
 
   const { id } = params;
@@ -27,16 +28,18 @@ function Song({ data, index, isPlay, isSearching }) {
       isPlaying: true,
       songSearch: isSearching ? songId : "",
       pausingToPlayNewSong: currentSong && isPaused,
+      lyrics: []
     };
 
     const action = updateCurrentSong(songObject);
     dispatch(action);
 
     dispatch(updateCurrentAlbum(id))
-    // Khi currentSong thay doi => cap nhat lai song-list trong store
     if (id) {
+      const isFetch = currentAlbum === id
+      if (isFetch) return
       const data = await homeApi.getPlaylist(id);
-      console.log('get Playlist')
+      // console.log('get danh sach song tu playlist')
       dispatch(addSongs(data.dataFromZingMp3.data.song.items.filter(item => 
         item.streamingStatus === 1 && item.isWorldWide )));
     }

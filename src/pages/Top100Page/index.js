@@ -46,7 +46,7 @@ function Top100Page() {
               <Row>
                 {top100NoiBat.items ? (
                   top100NoiBat.items.map((item) => (
-                    <Col xl={2} key={item.encodeId}>
+                    <Col xl={2} xs={6} key={item.encodeId}>
                       <NhanMp3Card data={item} />
                     </Col>
                   ))
@@ -60,7 +60,7 @@ function Top100Page() {
               <Row>
                 {top100VietNam.items ? (
                   top100VietNam.items.map((item) => (
-                    <Col xl={2} key={item.encodeId}>
+                    <Col xl={2} xs={6} key={item.encodeId}>
                       <NhanMp3Card data={item} />
                     </Col>
                   ))

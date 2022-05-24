@@ -11,6 +11,8 @@
     overflow-y: scroll;
     scroll-behavior: smooth;
     transition: all linear 0.4s;
+    display: grid;
+    place-items: center;
 }
 
 
@@ -32,4 +34,22 @@
 
 .lyric-container .lyric.active {
     color: yellow
+}
+
+.lyric-container .spinner-border {
+    width: 5rem;
+    height: 5rem;
+    border-width: 0.5rem;
+}
+
+
+@media (max-width: 576px) {
+    .lyric-container {
+        width: 100%;
+    }
+    
+    .lyric-container .lyrics .lyric {
+        font-size: 18px;
+        font-weight: 600;
+    }
 }

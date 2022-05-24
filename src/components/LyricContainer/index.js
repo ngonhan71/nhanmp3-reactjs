@@ -1,34 +1,45 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Spinner } from "react-bootstrap"
 import helper from "../../helper/NhanMp3";
 import songApi from "../../api/songApi";
 import LyricActive from "../LyricActive";
 import "./Lyric.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addLyris } from "../../redux/actions/playerControl"
 function LyricContainer({ cTime }) {
   const containerRef = useRef()
+  const dispatch = useDispatch()
+  
   const currentSong = useSelector((state) => state.playerControl.currentSong);
+  const lyrics = useSelector((state) => state.playerControl.lyrics);
+
+  const [loading, setLoading] = useState(false)
   const [dataLyric, setDataLyric] = useState([]);
-  const [data, setData] = useState([]);
+
   const [match, setMatch] = useState(false);
 
   useEffect(() => {
     const fetchLyrics = async () => {
+      if (lyrics.length > 0) return
+      console.log('call api lyris')
+      setLoading(true)
       const res = await songApi.getLyric(currentSong)
+      setLoading(false)
       const data = res.dataFromZingMp3.data.sentences
-      setData(data)
+      dispatch(addLyris(data))
     }
     fetchLyrics()
-  }, [currentSong])
+  }, [currentSong, dispatch, lyrics])
 
   useEffect(() => {
-    if (data) {
-      const customData = data.map((item) => {
+    if (lyrics && lyrics.length) {
+      const customData = lyrics.map((item) => {
         return helper.wordsToSentence(item.words, cTime);
       });
       setDataLyric(customData) 
     }
      
-  }, [cTime, data])
+  }, [cTime, lyrics])
   
   const handleScroll = useCallback((height) => {
     containerRef.current.scrollTop += height
@@ -46,7 +57,8 @@ function LyricContainer({ cTime }) {
 
   return (
     <div className="lyric-container" ref={containerRef}>
-      <ul className="lyrics">
+      {loading ? <Spinner animation="border" variant="light" /> : (
+        <ul className="lyrics">
         {dataLyric && match &&
           dataLyric.length > 0 &&
           dataLyric.map((item, index) => {
@@ -66,7 +78,8 @@ function LyricContainer({ cTime }) {
               )
             })
           }
-      </ul>
+        </ul>
+      )}
     </div>
   );
 }

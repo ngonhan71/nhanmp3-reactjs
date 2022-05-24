@@ -6,8 +6,11 @@ import {
   IoPlaySkipForward,
   IoPlayCircleOutline,
   IoPauseCircleOutline,
-  IoMicSharp
+  IoMicSharp,
+  IoVolumeHighSharp,
+  IoVolumeMute
 } from "react-icons/io5";
+import { Spinner } from "react-bootstrap"
 import LyricContainer from "../LyricContainer"
 import { useSelector, useDispatch } from "react-redux";
 import { memo } from "react";
@@ -25,6 +28,7 @@ function NhanMp3PlayerControl() {
   const dispatch = useDispatch();
   // console.log("player re");
 
+
   const currentSong = useSelector((state) => state.playerControl.currentSong);
   const isPlaying = useSelector((state) => state.playerControl.isPlaying);
   const currentIndex = useSelector((state) => state.playerControl.currentIndex);
@@ -34,20 +38,28 @@ function NhanMp3PlayerControl() {
   const isPaused = useSelector((state) => state.playerControl.isPaused);
   const pausingToPlayNewSong = useSelector((state) => state.playerControl.pausingToPlayNewSong);
 
+  const [loading, setLoading] = useState(false)
+
   const [songInfo, setSongInfo] = useState({});
   const [streaming, setStreaming] = useState({});
   const [isRepeat, setIsRepeat] = useState(false);
   const [isRandom, setIsRandom] = useState(false);
+  const [readyToDrag, setReadyToDrag] = useState(false)
 
   const [showLyric, setShowLyric] = useState(false)
 
   const [cTime, setCTime] = useState(0)
+  const [currentVolume, setCurrentVolume] = useState(1)
+
 
   const audioRef = useRef(null);
   const progressRef = useRef();
   const progressRunRef = useRef();
   const progressCircleRef = useRef();
   const timeLeftRef = useRef();
+  const volumeRef = useRef()
+  const volumeBarRef = useRef()
+  const volumeCircleRef = useRef()
 
   const handleClickBtnPlay = () => {
     if (!isPaused) {
@@ -128,6 +140,22 @@ function NhanMp3PlayerControl() {
 
   };
 
+  const handleClickVolume = (e) => {
+    const clientX = e.clientX;
+    const volumeClientRect = volumeRef.current.getBoundingClientRect();
+    const percent =
+      (clientX - volumeClientRect.left) / volumeClientRect.width;
+    handleUpdateVolumeUI(percent)
+    const volume = percent * 1
+    audioRef.current.volume = volume > 0 ? volume : 0;
+    setCurrentVolume(volume)
+
+  }
+
+  const handleProgressOnMouseDown = (e) => {
+    setReadyToDrag(true)
+  }  
+
   const handleUpdateCurrentTimeUI = (currentTime) => {
     timeLeftRef.current.textContent = currentTime
       ? helper.formatTime(currentTime)
@@ -139,6 +167,11 @@ function NhanMp3PlayerControl() {
     progressCircleRef.current.style.left = percent * 100 + "%";
   };
 
+  const handleUpdateVolumeUI = (percent) => {
+    volumeBarRef.current.style.width = percent * 100 + "%";
+    volumeCircleRef.current.style.left = percent * 100 + "%";
+  }
+
   const handlePlaySongByIndex = async (index) => {
     try {
       const songId = songs[index].encodeId
@@ -149,6 +182,7 @@ function NhanMp3PlayerControl() {
         currentIndex: index,
         isPaused: false,
         isPlaying: true,
+        lyrics: []
       };
       const action = updateCurrentSong(songObject);
       dispatch(action);
@@ -161,8 +195,10 @@ function NhanMp3PlayerControl() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true)
         const streaming = await songApi.getStreaming(currentSong);
         const song = await songApi.getSong(currentSong);
+        setLoading(false)
         if (streaming.status !== 'error') {
           setStreaming(streaming.dataFromZingMp3.data);
           setSongInfo(song.dataFromZingMp3.data);
@@ -215,23 +251,69 @@ function NhanMp3PlayerControl() {
     setShowLyric(!showLyric)
   }
 
+  useEffect(() => {
+    const handleDocumentOnMouseMove = (e) => {
+      const clientX = e.clientX
+      const progressRect = progressRef.current.getBoundingClientRect()
+      const left = progressRect.left
+      
+      const min = left
+      const max = progressRect.width + left
+      if (readyToDrag && clientX >= min && clientX <= max) {
+          if (!isPaused) {
+            audioRef.current.pause()
+          }
+          const percent = (clientX - left) / progressRect.width
+          const duration = audioRef.current.duration
+          audioRef.current.currentTime = percent * duration
+          handleUpdateProgressUI(percent)
+      }
+    }
+    const handleDocumentOnMouseUp = (e) => {
+      if (audioRef.current.paused && readyToDrag) {
+        audioRef.current.play()
+      }
+      setReadyToDrag(false)
+    }
+    document.addEventListener('mousemove', handleDocumentOnMouseMove)
+    document.addEventListener('mouseup', handleDocumentOnMouseUp)
+    return () => {
+      document.removeEventListener('mousemove', handleDocumentOnMouseMove)
+      document.removeEventListener('mouseup', handleDocumentOnMouseUp)
+    }
+  }, [readyToDrag, dispatch, isPaused])
+
+  const handleClickVolumeBtn = () => {
+    if (currentVolume !== 0) {
+      audioRef.current.volume = 0
+      handleUpdateVolumeUI(0)
+      setCurrentVolume(0)
+    }
+    else {
+      audioRef.current.volume = 0.5
+      handleUpdateVolumeUI(0.5)
+      setCurrentVolume(0.5)
+    }
+  }
 
   return (
     <div className={`player-controls ${isPlaying ? "active" : ""}`}>
       <div className="player-controls-container">
         {showLyric && <LyricContainer cTime={cTime} />}
         <div className="player-controls-left">
-          <div className="music-info">
-            <div className="media-left">
-              <div className="thumbnail">
-                <img src={songInfo && songInfo.thumbnail} alt="" />
+          {loading ? <Spinner animation="border" variant="light" /> : (
+            <div className="music-info">
+              <div className="media-left">
+                <div className="thumbnail">
+                  <img src={songInfo && songInfo.thumbnail} alt="" />
+                </div>
+              </div>
+              <div className="media-content">
+                <p className="song-name title">{songInfo && songInfo.title}</p>
+                <p className="song-author">{songInfo && songInfo.artistsNames}</p>
               </div>
             </div>
-            <div className="media-content">
-              <p className="song-name title">{songInfo && songInfo.title}</p>
-              <p className="song-author">{songInfo && songInfo.artistsNames}</p>
-            </div>
-          </div>
+          )}
         </div>
         <div className="player-controls-center">
           <div className="actions">
@@ -276,6 +358,7 @@ function NhanMp3PlayerControl() {
               className="nhanmp3-progress"
               ref={progressRef}
               onClick={handleClickProgress}
+              onMouseDown={handleProgressOnMouseDown}
             >
               <div className="nhanmp3-progress-bar">
                 <div className="progress-run" ref={progressRunRef}></div>
@@ -287,8 +370,19 @@ function NhanMp3PlayerControl() {
             </span>
           </div>
         </div>
-        <div>
+          
+        <div className="player-controls-right">
           <button className={`nhanmp3-btn`} onClick={handleShowLyric}><IoMicSharp /></button>
+          
+          <div className="volume-container">
+            <button className="nhanmp3-btn" onClick={handleClickVolumeBtn}>
+              {currentVolume && currentVolume > 0 ? <IoVolumeHighSharp /> : <IoVolumeMute />} 
+            </button>
+            <div className="volume-progress" ref={volumeRef} onClick={handleClickVolume}>
+              <div className="volume-progress-bar" ref={volumeBarRef}></div>
+              <div className="volume-progress-circle" ref={volumeCircleRef}></div>
+            </div>
+          </div>
         </div>
         <audio
           ref={audioRef}

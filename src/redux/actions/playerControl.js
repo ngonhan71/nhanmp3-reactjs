@@ -20,13 +20,6 @@ export const updateCurrentAlbum = (album) => {
     }
 }
 
-export const updateIndexSong = (index) => {
-    return  {
-        type: 'UPDATE_INDEX_SONG',
-        payload: index
-    }
-}
-
 export const updateIsPaused = (value) => {
     return  {
         type: 'UPDATE_IS_PAUSED',
@@ -38,6 +31,13 @@ export const updateIsPlaying = (value) => {
     return  {
         type: 'UPDATE_IS_PLAYING',
         payload: value
+    }
+}
+
+export const addLyris = (lyrics) => {
+    return  {
+        type: 'ADD_LYRICS',
+        payload: lyrics
     }
 }
 
