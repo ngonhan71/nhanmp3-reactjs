@@ -152,7 +152,7 @@ function NhanMp3PlayerControl() {
 
   }
 
-  const handleProgressOnMouseDown = (e) => {
+  const handleProgressMouseDownOrTouchStart = (e) => {
     setReadyToDrag(true)
   }  
 
@@ -252,11 +252,10 @@ function NhanMp3PlayerControl() {
   }
 
   useEffect(() => {
-    const handleDocumentOnMouseMove = (e) => {
-      const clientX = e.clientX
+    const handleDocumentMouseMoveOrTouchMove = (e) => {
+      const clientX = e.clientX || e.touches[0].clientX
       const progressRect = progressRef.current.getBoundingClientRect()
       const left = progressRect.left
-      
       const min = left
       const max = progressRect.width + left
       if (readyToDrag && clientX >= min && clientX <= max) {
@@ -269,17 +268,21 @@ function NhanMp3PlayerControl() {
           handleUpdateProgressUI(percent)
       }
     }
-    const handleDocumentOnMouseUp = (e) => {
+    const handleDocumentMouseUpOrTouchEnd = (e) => {
       if (audioRef.current.paused && readyToDrag) {
         audioRef.current.play()
       }
       setReadyToDrag(false)
     }
-    document.addEventListener('mousemove', handleDocumentOnMouseMove)
-    document.addEventListener('mouseup', handleDocumentOnMouseUp)
+    document.addEventListener('mousemove', handleDocumentMouseMoveOrTouchMove)
+    document.addEventListener('mouseup', handleDocumentMouseUpOrTouchEnd)
+    document.addEventListener('touchmove', handleDocumentMouseMoveOrTouchMove)
+    document.addEventListener('touchend', handleDocumentMouseUpOrTouchEnd)
     return () => {
-      document.removeEventListener('mousemove', handleDocumentOnMouseMove)
-      document.removeEventListener('mouseup', handleDocumentOnMouseUp)
+      document.removeEventListener('mousemove', handleDocumentMouseMoveOrTouchMove)
+      document.removeEventListener('mouseup', handleDocumentMouseUpOrTouchEnd)
+      document.removeEventListener('touchmove', handleDocumentMouseMoveOrTouchMove)
+      document.removeEventListener('touchend', handleDocumentMouseUpOrTouchEnd)
     }
   }, [readyToDrag, dispatch, isPaused])
 
@@ -295,13 +298,13 @@ function NhanMp3PlayerControl() {
       setCurrentVolume(0.5)
     }
   }
-
+ 
   return (
     <div className={`player-controls ${isPlaying ? "active" : ""}`}>
       <div className="player-controls-container">
         {showLyric && <LyricContainer cTime={cTime} />}
         <div className="player-controls-left">
-          {loading ? <Spinner animation="border" variant="light" /> : (
+          {loading ? <Spinner className="spinner" animation="border" variant="light" /> : (
             <div className="music-info">
               <div className="media-left">
                 <div className="thumbnail">
@@ -358,7 +361,8 @@ function NhanMp3PlayerControl() {
               className="nhanmp3-progress"
               ref={progressRef}
               onClick={handleClickProgress}
-              onMouseDown={handleProgressOnMouseDown}
+              onMouseDown={handleProgressMouseDownOrTouchStart}
+              onTouchStart={handleProgressMouseDownOrTouchStart}
             >
               <div className="nhanmp3-progress-bar">
                 <div className="progress-run" ref={progressRunRef}></div>

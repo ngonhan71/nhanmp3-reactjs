@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Spinner } from "react-bootstrap"
 import helper from "../../helper/NhanMp3";
 import songApi from "../../api/songApi";
-import LyricActive from "../LyricActive";
+import Lyric from "../Lyric";
 import "./Lyric.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addLyris } from "../../redux/actions/playerControl"
@@ -55,6 +55,7 @@ function LyricContainer({ cTime }) {
     else setMatch(false)
   }, [dataLyric])
 
+
   return (
     <div className="lyric-container" ref={containerRef}>
       {loading ? <Spinner animation="border" variant="light" /> : (
@@ -63,8 +64,10 @@ function LyricContainer({ cTime }) {
           dataLyric.length > 0 &&
           dataLyric.map((item, index) => {
             return (
-                item.active ? <LyricActive key={index} handleScroll={handleScroll} data={item} /> : 
-                <li key={index} className="lyric">{item.data}</li>
+                item.active ? <Lyric  key={index} active={true} 
+                                      handleScroll={handleScroll} 
+                                      data={item} /> : 
+                <Lyric key={index} data={item} />
             )
           })}
           {
@@ -73,8 +76,8 @@ function LyricContainer({ cTime }) {
             dataLyric.map((item, index) => {
               return (
                 helper.timLoiGanNhatActive(dataLyric, cTime) === index ? 
-                <LyricActive key={index} handleScroll={handleScroll} data={item} /> : 
-                  <li key={index} className="lyric">{item.data}</li>
+                <Lyric key={index} handleScroll={handleScroll} active={true} data={item} /> : 
+                  <Lyric key={index} data={item} />
               )
             })
           }

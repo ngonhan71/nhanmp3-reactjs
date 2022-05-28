@@ -28,8 +28,6 @@
     font-size: 32px;
     margin: 8px 0;
     font-weight: 600;
-    transition: all linear 0.4s;
-
 }
 
 .lyric-container .lyric.active {
@@ -46,10 +44,12 @@
 @media (max-width: 576px) {
     .lyric-container {
         width: 100%;
+        bottom: 125px;
     }
     
     .lyric-container .lyrics .lyric {
         font-size: 18px;
         font-weight: 600;
     }
+
 }
