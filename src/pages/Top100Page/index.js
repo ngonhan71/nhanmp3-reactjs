@@ -51,7 +51,7 @@ function Top100Page() {
                     </Col>
                   ))
                 ) : (
-                  <Skeleton height={170} count={2} style={{margin: '10px 0'}} />
+                  <Skeleton baseColor="#ccc" duration={1} height={170} count={2} style={{margin: '10px 0'}} />
                 )}
               </Row>
             </Col>
@@ -65,7 +65,7 @@ function Top100Page() {
                     </Col>
                   ))
                 ) : (
-                  <Skeleton height={170} count={2} style={{margin: '10px 0'}} />
+                  <Skeleton baseColor="#ccc" duration={1} height={170} count={2} style={{margin: '10px 0'}} />
                 )}
               </Row>
             </Col>

@@ -5,7 +5,6 @@ const initialState = {
   isPlaying: false,
   currentIndex: -1,
   songSearch: "",
-  pausingToPlayNewSong: false,
   songs: [],
   lyrics: []
 };
@@ -42,7 +41,6 @@ const playerControlReducer = (state = initialState, action) => {
       return {
         ...state,
         isPaused: action.payload,
-        pausingToPlayNewSong: false
       };
     }
 

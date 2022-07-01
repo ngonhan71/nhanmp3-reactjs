@@ -24,15 +24,15 @@ function PlayListDetail({data}) {
                 <div className="media-left">
                   <div className={`nhanmp3-card-image ${(!isPaused && currentAlbum === id) ? 'running' : ''}`}>
                       {data?.thumbnail ? <img src={data.thumbnail} alt="" /> :
-                      <Skeleton height={300} />}
+                      <Skeleton baseColor="#ccc" duration={1} height={300} />}
                   </div>
                 </div>
                 <div className="media-content">
                   <div className="content-top">
-                    <h3 className="title">{data?.title ? data.title : <Skeleton height={50} style={{margin: '5px 0'}} />}</h3>
+                    <h3 className="title">{data?.title ? data.title : <Skeleton baseColor="#ccc" duration={1} height={50} style={{margin: '5px 0'}} />}</h3>
                     {data ? <p className="release">Cập nhật: {data?.releaseDate ? data.releaseDate : helper.getNow()}</p> : ''}
-                    {data?.artistsNames ? <p>{data.artistsNames}</p> : <Skeleton height={25} style={{margin: '5px 0'}} />}
-                    {data?.like ? <p>{helper.formatLike(data.like)}</p> : <Skeleton height={25} style={{margin: '5px 0'}} />}
+                    {data?.artistsNames ? <p>{data.artistsNames}</p> : <Skeleton baseColor="#ccc" duration={1} height={25} style={{margin: '5px 0'}} />}
+                    {data?.like ? <p>{helper.formatLike(data.like)}</p> : <Skeleton baseColor="#ccc" duration={1} height={25} style={{margin: '5px 0'}} />}
                   </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@ function PlayListDetail({data}) {
           <Col xl={8} xs={12}>
               <div className="playlist-content">
                 <div className="description">
-                  <span>{data?.description ? data?.description : <Skeleton height={40} />}</span>
+                  <span>{data?.description ? data?.description : <Skeleton baseColor="#ccc" duration={1} height={40} />}</span>
                 </div>
                 {data?.song?.items ? (
                   <div className="song-list">
@@ -65,7 +65,7 @@ function PlayListDetail({data}) {
                     }
                   </div>
                 </div>
-                ) : <Skeleton count={10} width={400} height={80} style={{margin: '5px 0'}} />}
+                ) : <Skeleton baseColor="#ccc" duration={1} count={10} width={400} height={80} style={{margin: '5px 0'}} />}
             </div>
           </Col>
          </Row>

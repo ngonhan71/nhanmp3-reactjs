@@ -65,7 +65,7 @@ function SearchPage({type}) {
               {type === 'all' && 
                   <div className="song-list-content">
                   {
-                    loading ? <Skeleton height={85} count={5} style={{margin: '5px 0'}} /> :
+                    loading ? <Skeleton baseColor="#ccc" duration={1} height={85} count={5} style={{margin: '5px 0'}} /> :
                     (dataSearch && dataSearch.length > 0 ?
                       dataSearch.map(song => 
                         <Song key={song.encodeId} data={song} isSearching={true} isPlay={false} />)

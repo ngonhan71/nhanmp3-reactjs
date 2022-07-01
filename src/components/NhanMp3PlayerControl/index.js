@@ -28,7 +28,6 @@ function NhanMp3PlayerControl() {
   const dispatch = useDispatch();
   // console.log("player re");
 
-
   const currentSong = useSelector((state) => state.playerControl.currentSong);
   const isPlaying = useSelector((state) => state.playerControl.isPlaying);
   const currentIndex = useSelector((state) => state.playerControl.currentIndex);
@@ -36,7 +35,6 @@ function NhanMp3PlayerControl() {
  
   const songSearch = useSelector((state) => state.playerControl.songSearch);
   const isPaused = useSelector((state) => state.playerControl.isPaused);
-  const pausingToPlayNewSong = useSelector((state) => state.playerControl.pausingToPlayNewSong);
 
   const [loading, setLoading] = useState(false)
 
@@ -202,6 +200,7 @@ function NhanMp3PlayerControl() {
         if (streaming.status !== 'error') {
           setStreaming(streaming.dataFromZingMp3.data);
           setSongInfo(song.dataFromZingMp3.data);
+          dispatch(updateIsPaused(false))
         } else {
           const songObject = {
             currentSong: "",
@@ -237,15 +236,12 @@ function NhanMp3PlayerControl() {
 
 
   useEffect(() => {
-    if (pausingToPlayNewSong) {
-      audioRef.current.src = streaming && streaming[128]
-    }
-    if (!isPaused) {
+    if (!isPaused && streaming && streaming[128]) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
-  }, [streaming, isPaused, pausingToPlayNewSong]);
+  }, [streaming, isPaused]);
 
   const handleShowLyric = async () => {
     setShowLyric(!showLyric)

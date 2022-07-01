@@ -53,7 +53,7 @@ function HomePage() {
                       <NhanMp3Card data={item} />
                     </Col>
                   ))
-                ) : <Skeleton height={200} count={2} style={{margin: '10px 0'}} />
+                ) : <Skeleton baseColor="#ccc" duration={1} height={200} count={2} style={{margin: '10px 0'}} />
                 }
               </Row>
             </Col>
@@ -67,7 +67,7 @@ function HomePage() {
                       <NhanMp3Card data={item} />
                     </Col>
                   ))
-                ) : <Skeleton height={200} count={2} style={{margin: '10px 0'}} /> }
+                ) : <Skeleton baseColor="#ccc" duration={1} height={200} count={2} style={{margin: '10px 0'}} /> }
               </Row>
             </Col>
 

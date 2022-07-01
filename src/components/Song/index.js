@@ -24,10 +24,9 @@ function Song({ data, index, isPlay, isSearching }) {
     const songObject = {
       currentSong: songId,
       currentIndex: isSearching ? -1 : index,
-      isPaused: false,
+      isPaused: true,
       isPlaying: true,
       songSearch: isSearching ? songId : "",
-      pausingToPlayNewSong: currentSong && isPaused,
       lyrics: []
     };
 
