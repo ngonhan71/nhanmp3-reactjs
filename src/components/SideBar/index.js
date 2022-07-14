@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 import { IoHomeOutline, IoStarOutline, IoClose } from 'react-icons/io5'
 import './SideBar.css'
 import SideBarOption from '../SideBarOption'
+import { memo } from "react"
 function SideBar({isActive, onCloseSideBar}) {
+    console.log("re-render SideBar")
     const handleCloseSideBar = () => {
         onCloseSideBar()
     }
@@ -16,8 +18,8 @@ function SideBar({isActive, onCloseSideBar}) {
             
             <div className="nhanmp3-navbar">
                 <div className="nav-item">
-                    <SideBarOption Icon={IoHomeOutline} title="Khám Phá" path={"/"} />
-                    <SideBarOption Icon={IoStarOutline} title="Top 100" path={"top100"} />
+                    <SideBarOption onCloseSideBar={onCloseSideBar} Icon={IoHomeOutline} title="Khám Phá" path={"/"} />
+                    <SideBarOption onCloseSideBar={onCloseSideBar} Icon={IoStarOutline} title="Top 100" path={"top100"} />
                 </div>
             </div>
 
@@ -28,4 +30,4 @@ function SideBar({isActive, onCloseSideBar}) {
 
 }
 
-export default SideBar
+export default memo(SideBar)

@@ -17,21 +17,19 @@ function Top100Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (JSON.stringify(top100NoiBat) === JSON.stringify({}) || JSON.stringify(top100VietNam) === JSON.stringify({})) {
-          console.log('call API TOP 100')
-          const data = await homeApi.getTop100();
-          dispatch(addTop100({
-            top100NoiBat: data.dataFromZingMp3.data[0],
-            top100VietNam: data.dataFromZingMp3.data[1]
-          }))
-        }
-       
+        console.log('call API TOP 100')
+        const data = await homeApi.getTop100();
+        dispatch(addTop100({
+          top100NoiBat: data.dataFromZingMp3.data[0],
+          top100VietNam: data.dataFromZingMp3.data[1]
+        }))
       } catch (error) {
         console.log(error);
       }
     };
-
-    fetchData();
+    if (JSON.stringify(top100NoiBat) === JSON.stringify({}) || JSON.stringify(top100VietNam) === JSON.stringify({})) {
+      fetchData();
+    }
   }, [dispatch, top100NoiBat, top100VietNam]);
 
   // console.log({top100NoiBat, top100VietNam});

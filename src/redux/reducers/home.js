@@ -1,6 +1,6 @@
 const initialState = {
-    sectionCoTheBanMuonNghe: {},
-    sectionNhacMoiMoiNgay: {},
+    sectionOne: {},
+    sectionTwo: {},
     top100NoiBat: {},
     top100VietNam: {}
   };
@@ -10,13 +10,13 @@ const initialState = {
       case "ADD_SECTIONS": {
         console.log({
             ...state,
-            sectionCoTheBanMuonNghe: action.payload.sectionCoTheBanMuonNghe,
-            sectionNhacMoiMoiNgay: action.payload.sectionNhacMoiMoiNgay,
+            sectionOne: action.payload.sectionOne,
+            sectionTwo: action.payload.sectionTwo,
         })
         return {
           ...state,
-          sectionCoTheBanMuonNghe: action.payload.sectionCoTheBanMuonNghe,
-            sectionNhacMoiMoiNgay: action.payload.sectionNhacMoiMoiNgay,
+          sectionOne: action.payload.sectionOne,
+          sectionTwo: action.payload.sectionTwo,
         };
       }
 

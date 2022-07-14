@@ -8,7 +8,7 @@ import SearchPage from './pages/SearchPage'
 import Header from './components/Header';
 import SideBar from './components/SideBar'
 import NhanMp3PlayerControl from './components/NhanMp3PlayerControl';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 function App() {
 
@@ -17,13 +17,13 @@ function App() {
 
   const isPlaying = useSelector(state => state.playerControl.isPlaying)
 
-  const handleOpenSideBar = () => {
+  const handleOpenSideBar = useCallback(() => {
     setIsActive(!isActive)
-  }
+  }, [isActive])
 
-  const handleCloseSideBar = () => {
+  const handleCloseSideBar = useCallback(() => {
     setIsActive(false)
-  }
+  }, [])
 
 
   return (
